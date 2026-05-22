@@ -174,7 +174,10 @@
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="agents.html">Agents</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="agents.html">Agents</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="agent/verifier-profile.html">Verifier Profile</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mcp.html">MCP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acp.html">ACP (Agent Client Protocol)</a></li>
@@ -465,9 +468,11 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#making-changes">Making Changes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#browser-integration">Browser Integration</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiprompt-syntax">Multiprompt syntax</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#queue-follow-up-prompts">Queue follow-up prompts</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-selection-patterns">Tool Selection Patterns</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skip-confirmation-prompts">Skip confirmation prompts</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-interactive-mode">Non-interactive mode</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-readable-output">Machine-readable output</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-commit-integration">Pre-commit Integration</a></li>
 </ul>
 </li>
@@ -502,10 +507,12 @@
 <li><p><a class="reference internal" href="#making-changes" id="id5">Making Changes</a></p></li>
 <li><p><a class="reference internal" href="#browser-integration" id="id6">Browser Integration</a></p></li>
 <li><p><a class="reference internal" href="#multiprompt-syntax" id="id7">Multiprompt syntax</a></p></li>
-<li><p><a class="reference internal" href="#tool-selection-patterns" id="id8">Tool Selection Patterns</a></p></li>
-<li><p><a class="reference internal" href="#skip-confirmation-prompts" id="id9">Skip confirmation prompts</a></p></li>
-<li><p><a class="reference internal" href="#non-interactive-mode" id="id10">Non-interactive mode</a></p></li>
-<li><p><a class="reference internal" href="#pre-commit-integration" id="id11">Pre-commit Integration</a></p></li>
+<li><p><a class="reference internal" href="#queue-follow-up-prompts" id="id8">Queue follow-up prompts</a></p></li>
+<li><p><a class="reference internal" href="#tool-selection-patterns" id="id9">Tool Selection Patterns</a></p></li>
+<li><p><a class="reference internal" href="#skip-confirmation-prompts" id="id10">Skip confirmation prompts</a></p></li>
+<li><p><a class="reference internal" href="#non-interactive-mode" id="id11">Non-interactive mode</a></p></li>
+<li><p><a class="reference internal" href="#machine-readable-output" id="id12">Machine-readable output</a></p></li>
+<li><p><a class="reference internal" href="#pre-commit-integration" id="id13">Pre-commit Integration</a></p></li>
 </ul>
 </li>
 </ul>
@@ -625,6 +632,17 @@ from matplotlib.animation import FuncAnimation
 </div>
 <p>This is particularly useful for breaking down complex tasks into steps and creating <a class="reference internal" href="automation.html"><span class="doc">Automation</span></a> workflows.</p>
 </section>
+<section id="queue-follow-up-prompts">
+<h3>Queue follow-up prompts<a class="headerlink" href="#queue-follow-up-prompts" title="Link to this heading">#</a></h3>
+<p>If another <code class="docutils literal notranslate"><span class="pre">gptme</span></code> process is already busy in a conversation, queue the next
+user turn from a second terminal instead of waiting for the current step to
+finish:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gptme-util<span class="w"> </span>chats<span class="w"> </span>send<span class="w"> </span>chat-123<span class="w"> </span><span class="s2">&quot;once the tests finish, summarize the failures&quot;</span>
+</pre></div>
+</div>
+<p>The running conversation will drain the queued prompt on its next turn. Use
+<code class="docutils literal notranslate"><span class="pre">gptme-util</span> <span class="pre">chats</span> <span class="pre">list</span></code> if you need to look up the conversation ID first.</p>
+</section>
 <section id="tool-selection-patterns">
 <h3>Tool Selection Patterns<a class="headerlink" href="#tool-selection-patterns" title="Link to this heading">#</a></h3>
 <p>Use <code class="docutils literal notranslate"><span class="pre">--tools</span></code> to control which tools are available.</p>
@@ -670,6 +688,21 @@ with repeated screenshots:</p>
 </pre></div>
 </div>
 <p>Note: <code class="docutils literal notranslate"><span class="pre">--non-interactive</span></code> implies <code class="docutils literal notranslate"><span class="pre">--no-confirm</span></code>, so you don’t need to specify both.</p>
+</section>
+<section id="machine-readable-output">
+<h3>Machine-readable output<a class="headerlink" href="#machine-readable-output" title="Link to this heading">#</a></h3>
+<p>Pair <code class="docutils literal notranslate"><span class="pre">--non-interactive</span></code> with <code class="docutils literal notranslate"><span class="pre">--output-format</span> <span class="pre">json</span></code> when stdout needs to
+be consumed by another program. In JSON mode, gptme emits one JSON object per
+line on stdout (JSONL):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gptme<span class="w"> </span>--non-interactive<span class="w"> </span>--output-format<span class="w"> </span>json<span class="w"> </span><span class="s1">&#39;summarize this repository&#39;</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">--resume</span></code> to continue an existing automated conversation without
+supplying a new prompt. This also picks up any queued follow-up prompts for the
+current conversation before exiting:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gptme<span class="w"> </span>--non-interactive<span class="w"> </span>--output-format<span class="w"> </span>json<span class="w"> </span>--resume
+</pre></div>
+</div>
 </section>
 <section id="pre-commit-integration">
 <span id="pre-commit"></span><h3>Pre-commit Integration<a class="headerlink" href="#pre-commit-integration" title="Link to this heading">#</a></h3>
@@ -805,9 +838,11 @@ def my_function(x: int, y: int) -> int:
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#making-changes">Making Changes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#browser-integration">Browser Integration</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiprompt-syntax">Multiprompt syntax</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#queue-follow-up-prompts">Queue follow-up prompts</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tool-selection-patterns">Tool Selection Patterns</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skip-confirmation-prompts">Skip confirmation prompts</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-interactive-mode">Non-interactive mode</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-readable-output">Machine-readable output</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-commit-integration">Pre-commit Integration</a></li>
 </ul>
 </li>

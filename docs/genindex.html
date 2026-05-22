@@ -181,7 +181,10 @@ window.addEventListener("load", () => mermaid.run());
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="agents.html">Agents</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="agents.html">Agents</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="agent/verifier-profile.html">Verifier Profile</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mcp.html">MCP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acp.html">ACP (Agent Client Protocol)</a></li>
@@ -418,6 +421,13 @@ window.addEventListener("load", () => mermaid.run());
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
+    --adversarial
+
+      <ul>
+        <li><a href="cli.html#cmdoption-gptme-eval-adversarial">gptme-eval command line option</a>
+</li>
+      </ul></li>
+      <li>
     --agent-path
 
       <ul>
@@ -435,9 +445,21 @@ window.addEventListener("load", () => mermaid.run());
     --all
 
       <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-list-all">gptme-util-skills-list command line option</a>
-</li>
         <li><a href="cli.html#cmdoption-gptme-util-tools-list-available">gptme-util-tools-list command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --architect
+
+      <ul>
+        <li><a href="cli.html#cmdoption-gptme-architect">gptme command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --architect-model
+
+      <ul>
+        <li><a href="cli.html#cmdoption-gptme-architect-model">gptme command line option</a>
 </li>
       </ul></li>
       <li>
@@ -448,10 +470,10 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       </ul></li>
       <li>
-    --author
+    --auto-accept-architect
 
       <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-a">gptme-util-skills-init command line option</a>
+        <li><a href="cli.html#cmdoption-gptme-auto-accept-architect">gptme command line option</a>
 </li>
       </ul></li>
       <li>
@@ -476,10 +498,6 @@ window.addEventListener("load", () => mermaid.run());
       <ul>
         <li><a href="cli.html#cmdoption-gptme-context">gptme command line option</a>
 </li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-c">gptme-util-chats-read command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-c">gptme-util-chats-search command line option</a>
-</li>
       </ul></li>
       <li>
     --cors-origin
@@ -496,17 +514,10 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       </ul></li>
       <li>
-    --delete
+    --editor-model
 
       <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-clean-delete">gptme-util-chats-clean command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --description
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-d">gptme-util-skills-init command line option</a>
+        <li><a href="cli.html#cmdoption-gptme-editor-model">gptme command line option</a>
 </li>
       </ul></li>
       <li>
@@ -517,6 +528,13 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       </ul></li>
       <li>
+    --exit-on-parent-death
+
+      <ul>
+        <li><a href="cli.html#cmdoption-gptme-server-serve-exit-on-parent-death">gptme-server-serve command line option</a>
+</li>
+      </ul></li>
+      <li>
     --file
 
       <ul>
@@ -524,35 +542,10 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       </ul></li>
       <li>
-    --force
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-install-force">gptme-util-hooks-install command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-install-f">gptme-util-skills-install command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --format
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-export-f">gptme-util-chats-export command line option</a>
-</li>
-      </ul></li>
-      <li>
     --full
 
       <ul>
         <li><a href="cli.html#cmdoption-gptme-util-context-retrieve-full">gptme-util-context-retrieve command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --global
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-install-global">gptme-util-hooks-install command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-uninstall-global">gptme-util-hooks-uninstall command line option</a>
 </li>
       </ul></li>
       <li>
@@ -570,35 +563,16 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       </ul></li>
       <li>
-    --include-test
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-clean-include-test">gptme-util-chats-clean command line option</a>
-</li>
-      </ul></li>
-      <li>
     --json
 
       <ul>
         <li><a href="cli.html#cmdoption-gptme-eval-json">gptme-eval command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-clean-json">gptme-util-chats-clean command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-list-json">gptme-util-chats-list command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-json">gptme-util-chats-search command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-stats-json">gptme-util-chats-stats command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-util-models-info-json">gptme-util-models-info command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-util-models-list-json">gptme-util-models-list command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-util-models-test-json">gptme-util-models-test command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-installed-json">gptme-util-skills-installed command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-list-json">gptme-util-skills-list command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-util-tools-info-json">gptme-util-tools-info command line option</a>
 </li>
@@ -627,39 +601,10 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       </ul></li>
       <li>
-    --limit
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-list-n">gptme-util-chats-list command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-n">gptme-util-chats-read command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-n">gptme-util-chats-search command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-search-n">gptme-util-mcp-search command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-search-n">gptme-util-skills-search command line option</a>
-</li>
-      </ul></li>
-      <li>
     --list
 
       <ul>
         <li><a href="cli.html#cmdoption-gptme-eval-l">gptme-eval command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --matches
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-m">gptme-util-chats-search command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --max-messages
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-clean-n">gptme-util-chats-clean command line option</a>
 </li>
       </ul></li>
       <li>
@@ -690,10 +635,6 @@ window.addEventListener("load", () => mermaid.run());
       <ul>
         <li><a href="cli.html#cmdoption-gptme-name">gptme command line option</a>
 </li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-n">gptme-util-skills-init command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-install-n">gptme-util-skills-install command line option</a>
-</li>
       </ul></li>
       <li>
     --no-browser
@@ -714,6 +655,13 @@ window.addEventListener("load", () => mermaid.run());
 
       <ul>
         <li><a href="cli.html#cmdoption-gptme-util-tools-info-no-examples">gptme-util-tools-info command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --no-lessons
+
+      <ul>
+        <li><a href="cli.html#cmdoption-gptme-eval-no-lessons">gptme-eval command line option</a>
 </li>
       </ul></li>
       <li>
@@ -752,7 +700,12 @@ window.addEventListener("load", () => mermaid.run());
       <ul>
         <li><a href="cli.html#cmdoption-gptme-server-openapi-o">gptme-server-openapi command line option</a>
 </li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-export-o">gptme-util-chats-export command line option</a>
+      </ul></li>
+      <li>
+    --output-format
+
+      <ul>
+        <li><a href="cli.html#cmdoption-gptme-output-format">gptme command line option</a>
 </li>
       </ul></li>
       <li>
@@ -762,6 +715,8 @@ window.addEventListener("load", () => mermaid.run());
         <li><a href="cli.html#cmdoption-gptme-eval-p">gptme-eval command line option</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     --port
 
@@ -783,8 +738,6 @@ window.addEventListener("load", () => mermaid.run());
         <li><a href="cli.html#cmdoption-gptme-profile">gptme command line option</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     --provider
 
@@ -797,13 +750,6 @@ window.addEventListener("load", () => mermaid.run());
 
       <ul>
         <li><a href="cli.html#cmdoption-gptme-util-models-list-reasoning">gptme-util-models-list command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --registry
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-search-r">gptme-util-mcp-search command line option</a>
 </li>
       </ul></li>
       <li>
@@ -828,20 +774,6 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       </ul></li>
       <li>
-    --since
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-stats-since">gptme-util-chats-stats command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --start
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-start">gptme-util-chats-read command line option</a>
-</li>
-      </ul></li>
-      <li>
     --stream
 
       <ul>
@@ -851,28 +783,10 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       </ul></li>
       <li>
-    --summarize
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-list-summarize">gptme-util-chats-list command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-summarize">gptme-util-chats-search command line option</a>
-</li>
-      </ul></li>
-      <li>
     --system
 
       <ul>
         <li><a href="cli.html#cmdoption-gptme-system">gptme command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-system">gptme-util-chats-read command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --tags
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-t">gptme-util-skills-init command line option</a>
 </li>
       </ul></li>
       <li>
@@ -967,45 +881,24 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       </ul></li>
       <li>
+    --watch-pid
+
+      <ul>
+        <li><a href="cli.html#cmdoption-gptme-server-serve-watch-pid">gptme-server-serve command line option</a>
+</li>
+      </ul></li>
+      <li>
     --workspace
 
       <ul>
         <li><a href="cli.html#cmdoption-gptme-w">gptme command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-install-workspace">gptme-util-hooks-install command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-run-workspace">gptme-util-hooks-run command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-status-workspace">gptme-util-hooks-status command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-uninstall-workspace">gptme-util-hooks-uninstall command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-check-workspace">gptme-util-skills-check command line option</a>
 </li>
       </ul></li>
       <li>
     -a
 
       <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-a">gptme-util-skills-init command line option</a>
-</li>
         <li><a href="cli.html#cmdoption-gptme-util-tools-call-a">gptme-util-tools-call command line option</a>
-</li>
-      </ul></li>
-      <li>
-    -c
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-c">gptme-util-chats-read command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-c">gptme-util-chats-search command line option</a>
-</li>
-      </ul></li>
-      <li>
-    -d
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-d">gptme-util-skills-init command line option</a>
 </li>
       </ul></li>
       <li>
@@ -1019,10 +912,6 @@ window.addEventListener("load", () => mermaid.run());
     -f
 
       <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-export-f">gptme-util-chats-export command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-install-f">gptme-util-skills-install command line option</a>
-</li>
         <li><a href="cli.html#cmdoption-gptme-util-tokens-count-f">gptme-util-tokens-count command line option</a>
 </li>
       </ul></li>
@@ -1041,8 +930,6 @@ window.addEventListener("load", () => mermaid.run());
 </li>
         <li><a href="cli.html#cmdoption-gptme-eval-m">gptme-eval command line option</a>
 </li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-m">gptme-util-chats-search command line option</a>
-</li>
         <li><a href="cli.html#cmdoption-gptme-util-llm-generate-m">gptme-util-llm-generate command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-util-tokens-count-m">gptme-util-tokens-count command line option</a>
@@ -1054,30 +941,12 @@ window.addEventListener("load", () => mermaid.run());
       <ul>
         <li><a href="cli.html#cmdoption-gptme-n">gptme command line option</a>
 </li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-clean-n">gptme-util-chats-clean command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-list-n">gptme-util-chats-list command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-n">gptme-util-chats-read command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-n">gptme-util-chats-search command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-search-n">gptme-util-mcp-search command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-n">gptme-util-skills-init command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-install-n">gptme-util-skills-install command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-search-n">gptme-util-skills-search command line option</a>
-</li>
       </ul></li>
       <li>
     -o
 
       <ul>
         <li><a href="cli.html#cmdoption-gptme-server-openapi-o">gptme-server-openapi command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-export-o">gptme-util-chats-export command line option</a>
 </li>
       </ul></li>
       <li>
@@ -1093,8 +962,6 @@ window.addEventListener("load", () => mermaid.run());
       <ul>
         <li><a href="cli.html#cmdoption-gptme-r">gptme command line option</a>
 </li>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-search-r">gptme-util-mcp-search command line option</a>
-</li>
       </ul></li>
       <li>
     -t
@@ -1103,8 +970,6 @@ window.addEventListener("load", () => mermaid.run());
         <li><a href="cli.html#cmdoption-gptme-t">gptme command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-eval-t">gptme-eval command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-t">gptme-util-skills-init command line option</a>
 </li>
       </ul></li>
       <li>
@@ -1262,6 +1127,10 @@ window.addEventListener("load", () => mermaid.run());
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#gptme.logmanager.LogManager.edit">edit() (gptme.logmanager.LogManager method)</a>
 </li>
+      <li><a href="api.html#gptme.logmanager.ephemeral_cache_boundary">ephemeral_cache_boundary() (in module gptme.logmanager)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     EVAL_NAMES_OR_RESULT_FILES
 
@@ -1269,8 +1138,6 @@ window.addEventListener("load", () => mermaid.run());
         <li><a href="cli.html#cmdoption-gptme-eval-arg-EVAL_NAMES_OR_RESULT_FILES">gptme-eval command line option</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#gptme.tools.ToolUse.execute">execute() (gptme.tools.ToolUse method)</a>
 </li>
   </ul></td>
@@ -1364,7 +1231,15 @@ window.addEventListener("load", () => mermaid.run());
 </li>
         <li><a href="cli.html#cmdoption-gptme-agent-profile">--agent-profile</a>
 </li>
+        <li><a href="cli.html#cmdoption-gptme-architect">--architect</a>
+</li>
+        <li><a href="cli.html#cmdoption-gptme-architect-model">--architect-model</a>
+</li>
+        <li><a href="cli.html#cmdoption-gptme-auto-accept-architect">--auto-accept-architect</a>
+</li>
         <li><a href="cli.html#cmdoption-gptme-context">--context</a>
+</li>
+        <li><a href="cli.html#cmdoption-gptme-editor-model">--editor-model</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-m">--model</a>
 </li>
@@ -1375,6 +1250,8 @@ window.addEventListener("load", () => mermaid.run());
         <li><a href="cli.html#cmdoption-gptme-stream">--no-stream</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-n">--non-interactive</a>
+</li>
+        <li><a href="cli.html#cmdoption-gptme-output-format">--output-format</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-profile">--profile</a>
 </li>
@@ -1440,6 +1317,8 @@ window.addEventListener("load", () => mermaid.run());
     gptme-eval command line option
 
       <ul>
+        <li><a href="cli.html#cmdoption-gptme-eval-adversarial">--adversarial</a>
+</li>
         <li><a href="cli.html#cmdoption-gptme-eval-E">--eval-module</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-eval-json">--json</a>
@@ -1453,6 +1332,8 @@ window.addEventListener("load", () => mermaid.run());
         <li><a href="cli.html#cmdoption-gptme-eval-min-tests">--min-tests</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-eval-m">--model</a>
+</li>
+        <li><a href="cli.html#cmdoption-gptme-eval-no-lessons">--no-lessons</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-eval-user-context">--no-user-context</a>
 </li>
@@ -1500,6 +1381,8 @@ window.addEventListener("load", () => mermaid.run());
 </li>
         <li><a href="cli.html#cmdoption-gptme-server-serve-debug">--debug</a>
 </li>
+        <li><a href="cli.html#cmdoption-gptme-server-serve-exit-on-parent-death">--exit-on-parent-death</a>
+</li>
         <li><a href="cli.html#cmdoption-gptme-server-serve-host">--host</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-server-serve-model">--model</a>
@@ -1510,9 +1393,13 @@ window.addEventListener("load", () => mermaid.run());
 </li>
         <li><a href="cli.html#cmdoption-gptme-server-serve-v">--verbose</a>
 </li>
+        <li><a href="cli.html#cmdoption-gptme-server-serve-watch-pid">--watch-pid</a>
+</li>
         <li><a href="cli.html#cmdoption-gptme-server-serve-v">-v</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     gptme-util command line option
 
@@ -1522,111 +1409,6 @@ window.addEventListener("load", () => mermaid.run());
         <li><a href="cli.html#cmdoption-gptme-util-v">-v</a>
 </li>
       </ul></li>
-      <li>
-    gptme-util-chats-clean command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-clean-delete">--delete</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-clean-include-test">--include-test</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-clean-json">--json</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-clean-n">--max-messages</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-clean-n">-n</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-chats-export command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-export-f">--format</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-export-o">--output</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-export-f">-f</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-export-o">-o</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-export-arg-ID">ID</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-chats-list command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-list-json">--json</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-list-n">--limit</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-list-summarize">--summarize</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-list-n">-n</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-chats-read command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-c">--context</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-n">--limit</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-start">--start</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-system">--system</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-c">-c</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-n">-n</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-arg-ID">ID</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-chats-rename command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-rename-arg-ID">ID</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-rename-arg-NAME">NAME</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-chats-search command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-c">--context</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-json">--json</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-n">--limit</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-m">--matches</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-summarize">--summarize</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-c">-c</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-m">-m</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-n">-n</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-arg-QUERY">QUERY</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-chats-stats command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-stats-json">--json</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-stats-since">--since</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     gptme-util-context-index command line option
 
@@ -1644,40 +1426,6 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       </ul></li>
       <li>
-    gptme-util-hooks-install command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-install-force">--force</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-install-global">--global</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-install-workspace">--workspace</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-hooks-run command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-run-workspace">--workspace</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-hooks-status command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-status-workspace">--workspace</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-hooks-uninstall command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-uninstall-global">--global</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-hooks-uninstall-workspace">--workspace</a>
-</li>
-      </ul></li>
-      <li>
     gptme-util-llm-generate command line option
 
       <ul>
@@ -1690,35 +1438,6 @@ window.addEventListener("load", () => mermaid.run());
         <li><a href="cli.html#cmdoption-gptme-util-llm-generate-m">-m</a>
 </li>
         <li><a href="cli.html#cmdoption-gptme-util-llm-generate-arg-PROMPT">PROMPT</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-mcp-info command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-info-arg-SERVER_NAME">SERVER_NAME</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-mcp-search command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-search-n">--limit</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-search-r">--registry</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-search-n">-n</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-search-r">-r</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-search-arg-QUERY">QUERY</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-mcp-test command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-test-arg-SERVER_NAME">SERVER_NAME</a>
 </li>
       </ul></li>
       <li>
@@ -1779,106 +1498,6 @@ window.addEventListener("load", () => mermaid.run());
 
       <ul>
         <li><a href="cli.html#cmdoption-gptme-util-providers-test-arg-PROVIDER_NAME">PROVIDER_NAME</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-skills-check command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-check-workspace">--workspace</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-skills-init command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-a">--author</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-d">--description</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-n">--name</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-t">--tags</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-a">-a</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-d">-d</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-n">-n</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-t">-t</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-arg-PATH">PATH</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-skills-install command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-install-f">--force</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-install-n">--name</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-install-f">-f</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-install-n">-n</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-install-arg-SOURCE">SOURCE</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-skills-installed command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-installed-json">--json</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-skills-list command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-list-all">--all</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-list-json">--json</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-skills-publish command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-publish-arg-PATH">PATH</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-skills-search command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-search-n">--limit</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-search-n">-n</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-search-arg-QUERY">QUERY</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-skills-show command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-show-arg-NAME">NAME</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-skills-uninstall command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-uninstall-arg-NAME">NAME</a>
-</li>
-      </ul></li>
-      <li>
-    gptme-util-skills-validate command line option
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-validate-arg-PATH">PATH</a>
 </li>
       </ul></li>
       <li>
@@ -2004,25 +1623,14 @@ window.addEventListener("load", () => mermaid.run());
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li>
-    ID
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-export-arg-ID">gptme-util-chats-export command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-read-arg-ID">gptme-util-chats-read command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-rename-arg-ID">gptme-util-chats-rename command line option</a>
-</li>
-      </ul></li>
       <li><a href="hooks.html#gptme.hooks.init_hooks">init_hooks() (in module gptme.hooks)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#gptme.tools.ToolSpec.is_available">is_available (gptme.tools.ToolSpec property)</a>
 </li>
       <li><a href="api.html#gptme.config.MCPServerConfig.is_http">is_http (gptme.config.MCPServerConfig property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#gptme.tools.ToolSpec.is_runnable">is_runnable (gptme.tools.ToolSpec property)</a>
 </li>
       <li><a href="api.html#gptme.tools.ToolUse.iter_from_content">iter_from_content() (gptme.tools.ToolUse class method)</a>
@@ -2111,13 +1719,7 @@ window.addEventListener("load", () => mermaid.run());
     NAME
 
       <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-rename-arg-NAME">gptme-util-chats-rename command line option</a>
-</li>
         <li><a href="cli.html#cmdoption-gptme-util-profile-show-arg-NAME">gptme-util-profile-show command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-show-arg-NAME">gptme-util-skills-show command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-uninstall-arg-NAME">gptme-util-skills-uninstall command line option</a>
 </li>
       </ul></li>
   </ul></td>
@@ -2137,12 +1739,6 @@ window.addEventListener("load", () => mermaid.run());
 
       <ul>
         <li><a href="cli.html#cmdoption-gptme-util-context-index-arg-PATH">gptme-util-context-index command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-init-arg-PATH">gptme-util-skills-init command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-publish-arg-PATH">gptme-util-skills-publish command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-validate-arg-PATH">gptme-util-skills-validate command line option</a>
 </li>
       </ul></li>
       <li><a href="api.html#gptme.message.Message.pinned">pinned (gptme.message.Message attribute)</a>
@@ -2164,12 +1760,12 @@ window.addEventListener("load", () => mermaid.run());
       </ul></li>
       <li><a href="prompts.html#gptme.prompts.prompt_chat_history">prompt_chat_history() (in module gptme.prompts)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="prompts.html#gptme.prompts.prompt_full">prompt_full() (in module gptme.prompts)</a>
 </li>
       <li><a href="prompts.html#gptme.prompts.prompt_gptme">prompt_gptme() (in module gptme.prompts)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="prompts.html#gptme.prompts.prompt_project">prompt_project() (in module gptme.prompts)</a>
 </li>
       <li><a href="prompts.html#gptme.prompts.prompt_short">prompt_short() (in module gptme.prompts)</a>
@@ -2202,6 +1798,8 @@ window.addEventListener("load", () => mermaid.run());
       </ul></li>
       <li><a href="api.html#gptme.config.ProviderConfig">ProviderConfig (class in gptme.config)</a>
 </li>
+      <li><a href="api.html#gptme.logmanager.prune_ephemeral_messages">prune_ephemeral_messages() (in module gptme.logmanager)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -2212,13 +1810,7 @@ window.addEventListener("load", () => mermaid.run());
     QUERY
 
       <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-chats-search-arg-QUERY">gptme-util-chats-search command line option</a>
-</li>
         <li><a href="cli.html#cmdoption-gptme-util-context-retrieve-arg-QUERY">gptme-util-context-retrieve command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-search-arg-QUERY">gptme-util-mcp-search command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-search-arg-QUERY">gptme-util-skills-search command line option</a>
 </li>
       </ul></li>
   </ul></td>
@@ -2255,15 +1847,6 @@ window.addEventListener("load", () => mermaid.run());
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#gptme.config.ChatConfig.save">save() (gptme.config.ChatConfig method)</a>
 </li>
-      <li>
-    SERVER_NAME
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-info-arg-SERVER_NAME">gptme-util-mcp-info command line option</a>
-</li>
-        <li><a href="cli.html#cmdoption-gptme-util-mcp-test-arg-SERVER_NAME">gptme-util-mcp-test command line option</a>
-</li>
-      </ul></li>
       <li><a href="api.html#gptme.config.set_config">set_config() (in module gptme.config)</a>
 </li>
       <li><a href="api.html#gptme.config.set_config_from_workspace">set_config_from_workspace() (in module gptme.config)</a>
@@ -2274,13 +1857,6 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       <li><a href="api.html#gptme.config.setup_config_from_cli">setup_config_from_cli() (in module gptme.config)</a>
 </li>
-      <li>
-    SOURCE
-
-      <ul>
-        <li><a href="cli.html#cmdoption-gptme-util-skills-install-arg-SOURCE">gptme-util-skills-install command line option</a>
-</li>
-      </ul></li>
       <li><a href="api.html#gptme.logmanager.LogManager.switch_to_master">switch_to_master() (gptme.logmanager.LogManager method)</a>
 </li>
       <li><a href="api.html#gptme.logmanager.LogManager.switch_view">switch_view() (gptme.logmanager.LogManager method)</a>

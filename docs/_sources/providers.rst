@@ -69,7 +69,7 @@ To select a provider and model, run ``gptme`` with the ``-m``/``--model`` flag s
 
 .. code-block:: sh
 
-    gptme "hello" -m openai/gpt-5
+    gptme "hello" -m openai/gpt-5.5
     gptme "hello" -m anthropic  # will use provider default
     gptme "hello" -m openrouter/x-ai/grok-4
     gptme "hello" -m deepseek/deepseek-reasoner
@@ -79,11 +79,21 @@ To select a provider and model, run ``gptme`` with the ``-m``/``--model`` flag s
     gptme "hello" -m local/llama3.2:1b
     gptme "hello" -m gptme/claude-sonnet-4-6
 
-You can list the models known to gptme using ``gptme '/models' - '/exit'``
+You can list the models known to gptme using ``gptme '/models' - '/exit'``.
 
-On first startup API key will be prompted for if no model and no API keys are set in the config/environment. The key will be saved in the configuration file, the provider will be inferred, and its default model used.
+To configure provider credentials interactively, run ``/account`` inside gptme:
 
-Use the ``[env]`` section in the :ref:`global-config` file to store API keys using the same format as the environment variables:
+.. code-block:: text
+
+    /account
+    /account setup
+    /account setup openrouter
+
+``/account setup openrouter`` starts browser-based OpenRouter sign-in using OAuth / PKCE, stores the resulting key in ``~/.config/gptme/credentials.toml``, and switches the default model to OpenRouter's recommended default.
+
+For providers without OAuth onboarding yet, ``/account setup <provider>`` prompts for the key without putting it in shell history and stores it in ``~/.config/gptme/credentials.toml`` (or ``$XDG_CONFIG_HOME/gptme/credentials.toml`` if set). Supported manual providers currently include ``anthropic``, ``openai``, ``deepseek``, ``gemini``, ``groq``, and ``xai``.
+
+You can still use the ``[env]`` section in the :ref:`global-config` file to store API keys using the same format as the environment variables:
 
 - ``OPENAI_API_KEY="your-api-key"``
 - ``ANTHROPIC_API_KEY="your-api-key"``
@@ -92,6 +102,44 @@ Use the ``[env]`` section in the :ref:`global-config` file to store API keys usi
 - ``XAI_API_KEY="your-api-key"``
 - ``GROQ_API_KEY="your-api-key"``
 - ``DEEPSEEK_API_KEY="your-api-key"``
+
+.. rubric:: OpenAI Platform
+
+Use the direct OpenAI Platform provider with ``openai/<model>``:
+
+.. code-block:: sh
+
+    gptme "hello" -m openai/gpt-4o
+    gptme "hello" -m openai/gpt-5
+    gptme "fix this bug" -m openai/gpt-5.5
+
+GPT-5-class ``openai/*`` models (``gpt-5``, ``gpt-5.5``, ``gpt-5-mini``, and
+``gpt-5-nano``) support the OpenAI Responses API, but the direct OpenAI
+provider still keeps that path behind a feature gate for now.
+
+To enable the Responses API path for direct OpenAI GPT-5-class models, set
+``GPTME_OPENAI_RESPONSES_API=1``:
+
+.. code-block:: sh
+
+    export OPENAI_API_KEY="your-api-key"
+    export GPTME_OPENAI_RESPONSES_API=1
+    gptme "solve this problem" -m openai/gpt-5
+
+When that flag is enabled, gptme routes supported direct ``openai/*`` GPT-5
+models through ``/v1/responses``. Non-GPT-5 models, proxy providers such as
+OpenRouter, and other OpenAI-compatible backends continue using the legacy
+chat-completions path.
+
+Set ``GPTME_OPENAI_RESPONSES_API=0`` (or unset it) to force the legacy path
+again while debugging or comparing behavior. In addition to ``1``, the flag
+also accepts ``true``, ``yes``, and ``on`` as truthy values.
+
+.. note::
+
+    This flag only affects the direct ``openai`` provider. The
+    ``openai-subscription`` provider already uses its own Responses API path by
+    default.
 
 .. rubric:: OpenRouter
 
@@ -137,18 +185,19 @@ Access tokens are automatically refreshed before expiry, so you only need to aut
 
 .. code-block:: sh
 
+    gptme "hello" -m openai-subscription/gpt-5.5-pro
     gptme "hello" -m openai-subscription/gpt-5.4
-    gptme "hello" -m openai-subscription/gpt-5.2
 
 You can also append reasoning levels: ``:low``, ``:medium``, ``:high``, or ``:xhigh``:
 
 .. code-block:: sh
 
-    gptme "solve this problem" -m openai-subscription/gpt-5.4:high
+    gptme "solve this problem" -m openai-subscription/gpt-5.5-pro:high
 
 **Available Models:**
 
-- ``gpt-5.4`` - Latest GPT model with reasoning capabilities (recommended)
+- ``gpt-5.5-pro`` - Latest flagship with maximum reasoning compute (Responses API only)
+- ``gpt-5.4`` - Previous flagship with reasoning capabilities
 - ``gpt-5.3-codex`` - Previous code-optimized variant
 - ``gpt-5.3-codex-spark`` - Faster variant of gpt-5.3-codex
 - ``gpt-5.2`` - Previous generation GPT model

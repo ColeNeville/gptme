@@ -174,7 +174,10 @@
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="agents.html">Agents</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="agents.html">Agents</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="agent/verifier-profile.html">Verifier Profile</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mcp.html">MCP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acp.html">ACP (Agent Client Protocol)</a></li>
@@ -546,7 +549,7 @@
 </ul>
 </div>
 <p>To select a provider and model, run <code class="docutils literal notranslate"><span class="pre">gptme</span></code> with the <code class="docutils literal notranslate"><span class="pre">-m</span></code>/<code class="docutils literal notranslate"><span class="pre">--model</span></code> flag set to <code class="docutils literal notranslate"><span class="pre">&lt;provider&gt;/&lt;model&gt;</span></code>, for example:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>-m<span class="w"> </span>openai/gpt-5
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>-m<span class="w"> </span>openai/gpt-5.5
 gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>-m<span class="w"> </span>anthropic<span class="w">  </span><span class="c1"># will use provider default</span>
 gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>-m<span class="w"> </span>openrouter/x-ai/grok-4
 gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>-m<span class="w"> </span>deepseek/deepseek-reasoner
@@ -557,9 +560,16 @@ gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span clas
 gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>-m<span class="w"> </span>gptme/claude-sonnet-4-6
 </pre></div>
 </div>
-<p>You can list the models known to gptme using <code class="docutils literal notranslate"><span class="pre">gptme</span> <span class="pre">'/models'</span> <span class="pre">-</span> <span class="pre">'/exit'</span></code></p>
-<p>On first startup API key will be prompted for if no model and no API keys are set in the config/environment. The key will be saved in the configuration file, the provider will be inferred, and its default model used.</p>
-<p>Use the <code class="docutils literal notranslate"><span class="pre">[env]</span></code> section in the <a class="reference internal" href="config.html#global-config"><span class="std std-ref">Global config</span></a> file to store API keys using the same format as the environment variables:</p>
+<p>You can list the models known to gptme using <code class="docutils literal notranslate"><span class="pre">gptme</span> <span class="pre">'/models'</span> <span class="pre">-</span> <span class="pre">'/exit'</span></code>.</p>
+<p>To configure provider credentials interactively, run <code class="docutils literal notranslate"><span class="pre">/account</span></code> inside gptme:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/account
+/account setup
+/account setup openrouter
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">/account</span> <span class="pre">setup</span> <span class="pre">openrouter</span></code> starts browser-based OpenRouter sign-in using OAuth / PKCE, stores the resulting key in <code class="docutils literal notranslate"><span class="pre">~/.config/gptme/credentials.toml</span></code>, and switches the default model to OpenRouter’s recommended default.</p>
+<p>For providers without OAuth onboarding yet, <code class="docutils literal notranslate"><span class="pre">/account</span> <span class="pre">setup</span> <span class="pre">&lt;provider&gt;</span></code> prompts for the key without putting it in shell history and stores it in <code class="docutils literal notranslate"><span class="pre">~/.config/gptme/credentials.toml</span></code> (or <code class="docutils literal notranslate"><span class="pre">$XDG_CONFIG_HOME/gptme/credentials.toml</span></code> if set). Supported manual providers currently include <code class="docutils literal notranslate"><span class="pre">anthropic</span></code>, <code class="docutils literal notranslate"><span class="pre">openai</span></code>, <code class="docutils literal notranslate"><span class="pre">deepseek</span></code>, <code class="docutils literal notranslate"><span class="pre">gemini</span></code>, <code class="docutils literal notranslate"><span class="pre">groq</span></code>, and <code class="docutils literal notranslate"><span class="pre">xai</span></code>.</p>
+<p>You can still use the <code class="docutils literal notranslate"><span class="pre">[env]</span></code> section in the <a class="reference internal" href="config.html#global-config"><span class="std std-ref">Global config</span></a> file to store API keys using the same format as the environment variables:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">OPENAI_API_KEY=&quot;your-api-key&quot;</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ANTHROPIC_API_KEY=&quot;your-api-key&quot;</span></code></p></li>
@@ -569,6 +579,36 @@ gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span clas
 <li><p><code class="docutils literal notranslate"><span class="pre">GROQ_API_KEY=&quot;your-api-key&quot;</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">DEEPSEEK_API_KEY=&quot;your-api-key&quot;</span></code></p></li>
 </ul>
+<p class="rubric">OpenAI Platform</p>
+<p>Use the direct OpenAI Platform provider with <code class="docutils literal notranslate"><span class="pre">openai/&lt;model&gt;</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>-m<span class="w"> </span>openai/gpt-4o
+gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>-m<span class="w"> </span>openai/gpt-5
+gptme<span class="w"> </span><span class="s2">&quot;fix this bug&quot;</span><span class="w"> </span>-m<span class="w"> </span>openai/gpt-5.5
+</pre></div>
+</div>
+<p>GPT-5-class <code class="docutils literal notranslate"><span class="pre">openai/*</span></code> models (<code class="docutils literal notranslate"><span class="pre">gpt-5</span></code>, <code class="docutils literal notranslate"><span class="pre">gpt-5.5</span></code>, <code class="docutils literal notranslate"><span class="pre">gpt-5-mini</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">gpt-5-nano</span></code>) support the OpenAI Responses API, but the direct OpenAI
+provider still keeps that path behind a feature gate for now.</p>
+<p>To enable the Responses API path for direct OpenAI GPT-5-class models, set
+<code class="docutils literal notranslate"><span class="pre">GPTME_OPENAI_RESPONSES_API=1</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span><span class="s2">&quot;your-api-key&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">GPTME_OPENAI_RESPONSES_API</span><span class="o">=</span><span class="m">1</span>
+gptme<span class="w"> </span><span class="s2">&quot;solve this problem&quot;</span><span class="w"> </span>-m<span class="w"> </span>openai/gpt-5
+</pre></div>
+</div>
+<p>When that flag is enabled, gptme routes supported direct <code class="docutils literal notranslate"><span class="pre">openai/*</span></code> GPT-5
+models through <code class="docutils literal notranslate"><span class="pre">/v1/responses</span></code>. Non-GPT-5 models, proxy providers such as
+OpenRouter, and other OpenAI-compatible backends continue using the legacy
+chat-completions path.</p>
+<p>Set <code class="docutils literal notranslate"><span class="pre">GPTME_OPENAI_RESPONSES_API=0</span></code> (or unset it) to force the legacy path
+again while debugging or comparing behavior. In addition to <code class="docutils literal notranslate"><span class="pre">1</span></code>, the flag
+also accepts <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">yes</span></code>, and <code class="docutils literal notranslate"><span class="pre">on</span></code> as truthy values.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This flag only affects the direct <code class="docutils literal notranslate"><span class="pre">openai</span></code> provider. The
+<code class="docutils literal notranslate"><span class="pre">openai-subscription</span></code> provider already uses its own Responses API path by
+default.</p>
+</div>
 <p class="rubric">OpenRouter</p>
 <p><a class="reference external" href="https://openrouter.ai/">OpenRouter</a> provides access to 100+ models through a single API key. gptme applies sensible defaults for OpenRouter requests:</p>
 <ul class="simple">
@@ -601,17 +641,18 @@ gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span clas
 <p>This stores credentials locally at <code class="docutils literal notranslate"><span class="pre">~/.config/gptme/oauth/openai_subscription.json</span></code>.
 Access tokens are automatically refreshed before expiry, so you only need to authenticate once.</p>
 <p><strong>Usage:</strong></p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>-m<span class="w"> </span>openai-subscription/gpt-5.4
-gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>-m<span class="w"> </span>openai-subscription/gpt-5.2
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>-m<span class="w"> </span>openai-subscription/gpt-5.5-pro
+gptme<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>-m<span class="w"> </span>openai-subscription/gpt-5.4
 </pre></div>
 </div>
 <p>You can also append reasoning levels: <code class="docutils literal notranslate"><span class="pre">:low</span></code>, <code class="docutils literal notranslate"><span class="pre">:medium</span></code>, <code class="docutils literal notranslate"><span class="pre">:high</span></code>, or <code class="docutils literal notranslate"><span class="pre">:xhigh</span></code>:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>gptme<span class="w"> </span><span class="s2">&quot;solve this problem&quot;</span><span class="w"> </span>-m<span class="w"> </span>openai-subscription/gpt-5.4:high
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>gptme<span class="w"> </span><span class="s2">&quot;solve this problem&quot;</span><span class="w"> </span>-m<span class="w"> </span>openai-subscription/gpt-5.5-pro:high
 </pre></div>
 </div>
 <p><strong>Available Models:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">gpt-5.4</span></code> - Latest GPT model with reasoning capabilities (recommended)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gpt-5.5-pro</span></code> - Latest flagship with maximum reasoning compute (Responses API only)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gpt-5.4</span></code> - Previous flagship with reasoning capabilities</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gpt-5.3-codex</span></code> - Previous code-optimized variant</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gpt-5.3-codex-spark</span></code> - Faster variant of gpt-5.3-codex</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gpt-5.2</span></code> - Previous generation GPT model</p></li>
