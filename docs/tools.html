@@ -52,7 +52,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Commands" href="commands.html" />
-    <link rel="prev" title="Projects" href="projects.html" />
+    <link rel="prev" title="How to Refactor Code" href="howto/refactor.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -157,6 +157,14 @@
 <li class="toctree-l2"><a class="reference internal" href="demos.html">Demos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="automation.html">Automation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="projects.html">Projects</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="howto/index.html">How-To Guides</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="howto/edit-files.html">How to Edit Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto/code-review.html">How to Review Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto/debug-python.html">How to Debug Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto/automate-task.html">How to Automate Tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto/refactor.html">How to Refactor Code</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Tools</a></li>
@@ -2985,13 +2993,14 @@ Do <span class="gs">**not**</span> use chats for:
 </tr>
 </table><dl class="py function">
 <dt class="sig sig-object py">
-<span class="sig-prename descclassname"><span class="pre">gptme.tools.chats.</span></span><span class="sig-name descname"><span class="pre">conversation_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">since</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_json</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">gptme.tools.chats.</span></span><span class="sig-name descname"><span class="pre">conversation_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">since</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_json</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversation_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span></dt>
 <dd><p>Show statistics about conversation history.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>since</strong> – Only include conversations since this date (YYYY-MM-DD or Nd).</p></li>
 <li><p><strong>as_json</strong> – Output as JSON instead of formatted text.</p></li>
+<li><p><strong>conversation_id</strong> – Optional conversation ID to inspect in detail.</p></li>
 </ul>
 </dd>
 </dl>
@@ -4328,12 +4337,12 @@ roots remove filesystem file:///home/user/project
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="projects.html"
+       href="howto/refactor.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Projects</p>
+        <p class="prev-next-title">How to Refactor Code</p>
       </div>
     </a>
     <a class="right-next"
