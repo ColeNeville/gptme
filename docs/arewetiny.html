@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="_static/asciinema-player_3.6.3.css" />
+    <link rel="stylesheet" type="text/css" href="_static/asciinema-player_3.12.1.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3a28e17f" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -41,7 +41,7 @@
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/asciinema-player_3.6.3.js"></script>
+    <script src="_static/asciinema-player_3.12.1.js"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'arewetiny';</script>
     <link rel="canonical" href="https://gptme.org/docs/arewetiny.html" />
@@ -533,20 +533,20 @@ This is a major goal of the project, and it is important to keep in mind that th
 make[2]: Entering directory &#39;/home/runner/work/gptme/gptme&#39;
 Benchmarking import time for gptme
 time poetry run python -X importtime -m gptme --model openai --non-interactive 2&gt;&amp;1 | grep &quot;import time&quot; | cut -d&#39;|&#39; -f 2- | sort -n | tail -n 10
-     334534 |               mcp.server.fastmcp
-     334901 |             mcp.server
-     334940 |           mcp.server.session
-     513104 |           mcp.client.session
-     875791 |         mcp
-     875819 |       mcp.types
-     881092 |     gptme.mcp.client
-     884369 |   gptme.mcp
-     884396 | gptme.mcp.client
-    1097145 | gptme.cli.main
+     321012 |               mcp.server.fastmcp
+     321407 |             mcp.server
+     321454 |           mcp.server.session
+     502718 |           mcp.client.session
+     851262 |         mcp
+     851294 |       mcp.types
+     856483 |     gptme.mcp.client
+     859717 |   gptme.mcp
+     859746 | gptme.mcp.client
+    1178942 | gptme.cli.main
 
-real	0m2.927s
-user	0m2.518s
-sys	0m0.273s
+real	0m2.803s
+user	0m2.465s
+sys	0m0.259s
 make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 </pre></div>
 </div>
@@ -555,10 +555,10 @@ make[2]: Entering directory &#39;/home/runner/work/gptme/gptme&#39;
 Benchmarking startup time for gptme
 hyperfine &quot;poetry run gptme &#39;/exit&#39;&quot; -M 5 || poetry run gptme &#39;/exit&#39; || exit 1
 Benchmark 1: poetry run gptme &#39;/exit&#39;
-  Time (mean ± σ):      3.322 s ±  0.482 s    [User: 2.846 s, System: 0.712 s]
-  Range (min … max):    3.057 s …  4.182 s    5 runs
+  Time (mean ± σ):      3.294 s ±  0.469 s    [User: 2.799 s, System: 0.721 s]
+  Range (min … max):    3.057 s …  4.132 s    5 runs
  
-  Warning: The first benchmarking run for this command was significantly slower than the rest (4.182 s). This could be caused by (filesystem) caches that were not filled until after the first run. You should consider using the &#39;--warmup&#39; option to fill those caches before the actual benchmark. Alternatively, use the &#39;--prepare&#39; option to clear the caches before each timing run.
+  Warning: The first benchmarking run for this command was significantly slower than the rest (4.132 s). This could be caused by (filesystem) caches that were not filled until after the first run. You should consider using the &#39;--warmup&#39; option to fill those caches before the actual benchmark. Alternatively, use the &#39;--prepare&#39; option to clear the caches before each timing run.
  
 make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 </pre></div>
@@ -2640,7 +2640,7 @@ Clone found (python)
 │ Total:     │ 431            │ 142973      │ 652354       │ 129          │ 1533 (1.07%)     │ 8909 (1.37%)      │
 └────────────┴────────────────┴─────────────┴──────────────┴──────────────┴──────────────────┴───────────────────┘
 Found 129 clones.
-time: 313.791ms
+time: 327.409ms
 make[3]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 </pre></div>
