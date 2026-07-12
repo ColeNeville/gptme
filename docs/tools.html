@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/asciinema-player_3.12.1.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3a28e17f" />
@@ -187,7 +187,7 @@
 <li class="toctree-l1"><a class="reference internal" href="tui.html">TUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="providers.html">Providers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="custom-providers.html">Custom Providers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="providers-custom.html">Custom and Local Providers</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="model-routing.html">Choosing your model</a></li>
@@ -2006,7 +2006,7 @@ usage metadata was found in any completed subagent’s log.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">wait_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
+<span class="sig-name descname"><span class="pre">wait_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cancel_on_failure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
 <dd><p>Wait for all subagents to complete concurrently.</p>
 <p>Uses a thread pool to wait for all subagents simultaneously, so the
 wall-clock time is bounded by the slowest agent, not the sum of all
@@ -2017,7 +2017,21 @@ parsed through <code class="docutils literal notranslate"><span class="pre">_par
 auto-parse behaviour of <code class="docutils literal notranslate"><span class="pre">subagent_parallel(output_schema=...)</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> – Maximum seconds to wait for all subagents</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timeout</strong> – Maximum seconds to wait for all subagents</p></li>
+<li><p><strong>cancel_on_failure</strong> – <p>When True, cancel all remaining running subagents
+as soon as the first failure or timeout is detected. Cancelled
+agents are marked with <code class="docutils literal notranslate"><span class="pre">status=&quot;failure&quot;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">result=&quot;Cancelled</span> <span class="pre">due</span> <span class="pre">to</span> <span class="pre">sibling</span> <span class="pre">failure&quot;</span></code> in the returned
+dict. For subprocess-mode agents this sends SIGTERM (fast); for
+thread-mode agents it marks the result immediately while the
+background thread continues until its next natural checkpoint.</p>
+<p>Note: regardless of this flag, any agents still running when the
+overall <code class="docutils literal notranslate"><span class="pre">timeout</span></code> expires are always cancelled so subprocess/ACP
+agents do not keep running after the caller has received timed-out
+results.</p>
+</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dict mapping agent_id to status dict. When <code class="docutils literal notranslate"><span class="pre">output_schema</span></code> is set,
@@ -2054,7 +2068,7 @@ result is automatically parsed.</p>
 <span class="n">first_id</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">wait_any</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">first_id</span><span class="si">}</span><span class="s2"> finished first: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="c1"># Cancel the remaining agent</span>
-<span class="kn">from</span> <span class="nn">gptme.tools.subagent</span> <span class="kn">import</span> <span class="n">subagent_cancel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gptme.tools.subagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">subagent_cancel</span>
 <span class="k">for</span> <span class="n">aid</span> <span class="ow">in</span> <span class="n">job</span><span class="o">.</span><span class="n">agent_ids</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">aid</span> <span class="o">!=</span> <span class="n">first_id</span><span class="p">:</span>
         <span class="n">subagent_cancel</span><span class="p">(</span><span class="n">aid</span><span class="p">)</span>
@@ -2414,7 +2428,7 @@ as failure so callers won’t block waiting for it.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py">
-<span class="sig-prename descclassname"><span class="pre">gptme.tools.subagent.</span></span><span class="sig-name descname"><span class="pre">subagent_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tasks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_subprocess</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_acp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acp_command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gptme-acp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isolated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.14)"><span class="pre">type</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context_turns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context_window</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redact_secrets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">gptme.tools.subagent.</span></span><span class="sig-name descname"><span class="pre">subagent_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tasks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_subprocess</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_acp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acp_command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gptme-acp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isolated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.14)"><span class="pre">type</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context_turns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context_window</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redact_secrets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cancel_on_failure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
 <dd><p>Fan out N subagents in parallel, wait for all, return results as an ordered list.</p>
 <p>This is the simplest way to run independent tasks concurrently and collect
 all results. Unlike <code class="docutils literal notranslate"><span class="pre">subagent_batch()</span></code>, this function blocks until every
@@ -2458,6 +2472,18 @@ and tools, no workspace files). Pass <code class="docutils literal notranslate">
 inherited workspace context. Only applies to thread-mode subagents.</p></li>
 <li><p><strong>redact_secrets</strong> – If True (default), scrub common secret patterns from
 workspace context before passing it to subagents.</p></li>
+<li><p><strong>cancel_on_failure</strong> – <p>When True, cancel all remaining running subagents
+as soon as the first failure or timeout is detected. Cancelled
+agents are reported with <code class="docutils literal notranslate"><span class="pre">status=&quot;failure&quot;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">result=&quot;Cancelled</span> <span class="pre">due</span> <span class="pre">to</span> <span class="pre">sibling</span> <span class="pre">failure&quot;</span></code>. For subprocess-mode
+agents this sends SIGTERM (fast); for thread-mode agents the result
+is marked immediately while the background thread finishes naturally.</p>
+<p>Use this for defensive fan-out orchestration where one failing
+subagent means the overall task has failed and continuing would
+waste resources. Equivalent to calling <code class="docutils literal notranslate"><span class="pre">subagent_cancel()</span></code>
+manually after <code class="docutils literal notranslate"><span class="pre">subagent_wait_any()</span></code> detects a failure, but
+handled automatically inside the parallel wait.</p>
+</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -2483,10 +2509,18 @@ summary text from the subagent’s <code class="docutils literal notranslate"><s
     <span class="n">isolated</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="c1"># With structured output (Pydantic model)</span>
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="c1"># Fail-fast: cancel the fleet when the first subagent fails</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">subagent_parallel</span><span class="p">(</span>
+    <span class="p">[(</span><span class="s2">&quot;verifier-a&quot;</span><span class="p">,</span> <span class="s2">&quot;Verify output A&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;verifier-b&quot;</span><span class="p">,</span> <span class="s2">&quot;Verify output B&quot;</span><span class="p">)],</span>
+    <span class="n">cancel_on_failure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;failure&quot;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Verification failed — remaining agents were cancelled&quot;</span><span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">AnalysisResult</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="c1"># With structured output (Pydantic model)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AnalysisResult</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">summary</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">score</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">issues</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -2842,9 +2876,9 @@ agent completes within <code class="docutils literal notranslate"><span class="p
 is instructed to return valid JSON matching the schema inside its <code class="docutils literal notranslate"><span class="pre">complete</span></code>
 block. Results are automatically parsed and validated — the <code class="docutils literal notranslate"><span class="pre">&quot;result&quot;</span></code> value
 in each result dict is the parsed/validated object rather than a raw string:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
 
-<span class="k">class</span> <span class="nc">AnalysisResult</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AnalysisResult</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">summary</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">score</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">issues</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -4305,6 +4339,7 @@ Similar to Anthropic’s computer use demo, but integrated with gptme’s archit
 <li><p>right_click: Click right mouse button</p></li>
 <li><p>middle_click: Click middle mouse button</p></li>
 <li><p>double_click: Double click left mouse button</p></li>
+<li><p>triple_click: Triple click at position (selects all text in most native inputs; use with coordinate to click a field)</p></li>
 <li><p>left_click_drag: Click and drag to coordinates</p></li>
 </ul>
 </dd>
@@ -4432,7 +4467,7 @@ Common modifiers (ctrl, alt, cmd/super, shift) work consistently across platform
 
 <span class="gu">### Observation helpers (structured-first policy)</span>
 
-Three higher-level helpers are available that implement the structured-first observation policy:
+Higher-level helpers are available that implement the structured-first observation policy:
 
 <span class="k">-</span><span class="w"> </span>``observe_web(url, screenshot_too=False)`` — observe a web page using ARIA snapshots first
   (no vision tokens), with automatic fallback to a browser screenshot, then desktop screenshot.
@@ -4444,6 +4479,10 @@ Three higher-level helpers are available that implement the structured-first obs
   ``wait_for_change`` in one call — the complete &quot;act then look&quot; loop without separate
   screenshot calls. Use this for tight interaction loops where you want to see the screen
   after every click, keypress, or scroll.
+<span class="k">-</span><span class="w"> </span>``fill_native(coordinate, text)`` — replace text in a native (non-browser) text field in one
+  call. Triple-clicks to select all existing text, then types the replacement. The native
+  equivalent of ``fill_element(selector, value)`` for DOM targets. Use when the target is a
+  native app input (terminal, dialog, form) rather than a web page.
 <span class="k">-</span><span class="w"> </span>``computer_task(task, timeout=300, model=None)`` — run a multi-step computer-use task
   in a <span class="gs">**context-isolated subagent**</span> and block until done. All screenshots and intermediate
   steps are kept inside the subagent&#39;s own context — the caller&#39;s context stays lean. Use
@@ -4752,6 +4791,52 @@ Viewing image...</pre>
 <tr>
   <td style="text-align: right; padding: 0 1em 0 1em; width: 0.1%; font-weight: bold; color: #5555cc;">User</td>
   <td>
+    <pre style="margin-right: 1em; padding: 5px; margin-bottom: 0.5em; white-space: pre-wrap;">Replace the text in the URL bar of the browser window with "https://example.com"</pre>
+  </td>
+</tr>
+<tr>
+  <td style="text-align: right; padding: 0 1em 0 1em; width: 0.1%; font-weight: bold; color: #44cc44">Assistant</td>
+  <td>
+    <pre style="margin-right: 1em; padding: 5px; margin-bottom: 0.5em; white-space: pre-wrap;">I'll use fill_native to triple-click the URL bar to select all text, then type the new URL.<div style="opacity: 0.8;"><div style="display: inline-block; margin-bottom: -.5px; margin-top: 1em; border: 0 #888 solid; border-width: 1px 1px 0 1px; border-radius: 3px 3px 0 0; padding: 0.3em 0.6em; font-size: 0.7em; background-color: #000; color: #FFF">ipython</div>
+<pre style="background-color: #000; color: #ccc; margin-right: 1em; margin-top: 0; padding: 5px; margin-bottom: 0.5em; overflow: scroll;">fill_native((760, 45), "https://example.com")
+</pre></div></pre>
+  </td>
+</tr>
+<tr>
+  <td style="text-align: right; padding: 0 1em 0 1em; width: 0.1%; font-weight: bold; color: #AAAAAA">System</td>
+  <td>
+    <pre style="margin-right: 1em; padding: 5px; margin-bottom: 0.5em; white-space: pre-wrap;">Performed triple_click
+Typed text: https://example.com</pre>
+  </td>
+</tr>
+</table><table style="width: 100%; margin-bottom: 1em">
+  
+<tr>
+  <td style="text-align: right; padding: 0 1em 0 1em; width: 0.1%; font-weight: bold; color: #5555cc;">User</td>
+  <td>
+    <pre style="margin-right: 1em; padding: 5px; margin-bottom: 0.5em; white-space: pre-wrap;">Fill the "Username" field at (300, 200) in this native login dialog</pre>
+  </td>
+</tr>
+<tr>
+  <td style="text-align: right; padding: 0 1em 0 1em; width: 0.1%; font-weight: bold; color: #44cc44">Assistant</td>
+  <td>
+    <pre style="margin-right: 1em; padding: 5px; margin-bottom: 0.5em; white-space: pre-wrap;">I'll use fill_native to replace whatever is in the field with the username.<div style="opacity: 0.8;"><div style="display: inline-block; margin-bottom: -.5px; margin-top: 1em; border: 0 #888 solid; border-width: 1px 1px 0 1px; border-radius: 3px 3px 0 0; padding: 0.3em 0.6em; font-size: 0.7em; background-color: #000; color: #FFF">ipython</div>
+<pre style="background-color: #000; color: #ccc; margin-right: 1em; margin-top: 0; padding: 5px; margin-bottom: 0.5em; overflow: scroll;">fill_native((300, 200), "alice@example.com")
+</pre></div></pre>
+  </td>
+</tr>
+<tr>
+  <td style="text-align: right; padding: 0 1em 0 1em; width: 0.1%; font-weight: bold; color: #AAAAAA">System</td>
+  <td>
+    <pre style="margin-right: 1em; padding: 5px; margin-bottom: 0.5em; white-space: pre-wrap;">Performed triple_click
+Typed text: alice@example.com</pre>
+  </td>
+</tr>
+</table><table style="width: 100%; margin-bottom: 1em">
+  
+<tr>
+  <td style="text-align: right; padding: 0 1em 0 1em; width: 0.1%; font-weight: bold; color: #5555cc;">User</td>
+  <td>
     <pre style="margin-right: 1em; padding: 5px; margin-bottom: 0.5em; white-space: pre-wrap;">Open a new browser tab</pre>
   </td>
 </tr>
@@ -4945,12 +5030,54 @@ background, but callers immediately see the terminal timeout result.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">])</span>
 
 <span class="c1"># Audit what the subagent actually did (computer-use actions only)</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
 <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;gptme-util&quot;</span><span class="p">,</span> <span class="s2">&quot;computer&quot;</span><span class="p">,</span> <span class="s2">&quot;audit-log&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;conversation&quot;</span><span class="p">]])</span>
 
 <span class="c1"># Read the full step-by-step transcript</span>
-<span class="kn">from</span> <span class="nn">gptme.tools.subagent</span> <span class="kn">import</span> <span class="n">subagent_read_log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gptme.tools.subagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">subagent_read_log</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">subagent_read_log</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;agent_id&quot;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">gptme.tools.computer.</span></span><span class="sig-name descname"><span class="pre">fill_native</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coordinate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="api.html#gptme.message.Message" title="gptme.message.Message"><span class="pre">Message</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dd><p>Fill a native (non-browser) text field by clicking, selecting all, and typing.</p>
+<p>Use this to replace the content of a native text input with new text —
+equivalent to <code class="docutils literal notranslate"><span class="pre">fill_element(selector,</span> <span class="pre">value)</span></code> for web targets, but for
+native desktop/X11/macOS apps.</p>
+<p>The sequence is: triple-click to select all existing text, then type the
+replacement text.  No separate ctrl+a step is needed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Triple-click selects all text in <em>most</em> single-line native inputs, but
+may select only a word or line in terminals and multi-line text widgets.
+Verify the field type before using this helper in those contexts.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A screenshot is always captured after the fill so callers can observe
+the field state and detect partial or failed replacements.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coordinate</strong> – X,Y coordinates of the text field (in API space).</p></li>
+<li><p><strong>text</strong> – Replacement text to type into the field.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of <a class="reference internal" href="api.html#gptme.message.Message" title="gptme.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> objects — usually a single
+screenshot message showing the field state after the fill.</p>
+</dd>
+</dl>
+<p>Example (from IPython in a computer-use session):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace the URL bar text in a browser window</span>
+<span class="n">msgs</span> <span class="o">=</span> <span class="n">fill_native</span><span class="p">((</span><span class="mi">400</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="s2">&quot;https://example.com&quot;</span><span class="p">)</span>
+
+<span class="c1"># Fill a login field in a native app</span>
+<span class="n">msgs</span> <span class="o">=</span> <span class="n">fill_native</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="s2">&quot;username@example.com&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>

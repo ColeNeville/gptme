@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/asciinema-player_3.12.1.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3a28e17f" />
@@ -187,7 +187,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../tui.html">TUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../config.html">Configuration</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../providers.html">Providers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../custom-providers.html">Custom Providers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../providers-custom.html">Custom and Local Providers</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-routing.html">Choosing your model</a></li>
@@ -506,6 +506,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-selection-cheat-sheet">Backend selection cheat sheet</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnosing-delays">Diagnosing delays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips">Tips</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
 </ul>
             </nav>
         </div>
@@ -754,7 +755,7 @@ context; only a text summary comes back to the parent:</p>
 than having the parent accumulate dozens of screenshots and intermediate steps, the
 subagent runs the full loop internally and reports back a brief summary.</p>
 <p>If the task fails or you need the full step-by-step transcript:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gptme.tools.subagent</span> <span class="kn">import</span> <span class="n">subagent_read_log</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">gptme.tools.subagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">subagent_read_log</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">subagent_read_log</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;agent_id&quot;</span><span class="p">]))</span>
 </pre></div>
 </div>
@@ -915,6 +916,18 @@ prompts (but ensure the task is well-scoped first).</p></li>
 <li><p><strong>Describe visual outcomes</strong>: “confirm the dialog closed” works better than “click OK and move on”.</p></li>
 </ul>
 </section>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
+<p>Computer use support in gptme was bootstrapped in
+<a class="reference external" href="https://github.com/gptme/gptme/issues/32">issue #32</a>, where gptme used its own
+screenshot and keyboard tools to extend its own computer-use capabilities — writing
+much of the initial implementation itself.  That thread is an end-to-end example of
+gptme applying computer use in practice: taking screenshots of its own output, reading
+the results, and editing its own source code in response.</p>
+<p>The feature has since grown substantially (see <a class="reference external" href="https://github.com/gptme/gptme/issues/216">issue #216</a>
+for the full development history), but the original conversation in #32 remains the
+clearest self-contained demonstration of what the tool can do when pointed at a real task.</p>
+</section>
 </section>
 
 
@@ -979,6 +992,7 @@ prompts (but ensure the task is well-scoped first).</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-selection-cheat-sheet">Backend selection cheat sheet</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnosing-delays">Diagnosing delays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips">Tips</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
 </ul>
   </nav></div>
 
