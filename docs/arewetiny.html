@@ -171,6 +171,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="howto/index.html">How-To Guides</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="howto/choose-workflow.html">Choose a workflow for your task</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto/minimal-context.html">Run gptme with minimal context</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto/edit-files.html">How to Edit Files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto/code-review.html">How to Review Code</a></li>
@@ -541,20 +542,20 @@ This is a major goal of the project, and it is important to keep in mind that th
 make[2]: Entering directory &#39;/home/runner/work/gptme/gptme&#39;
 Benchmarking import time for gptme
 time poetry run python -X importtime -m gptme --model openai --non-interactive 2&gt;&amp;1 | grep &quot;import time&quot; | cut -d&#39;|&#39; -f 2- | sort -n | tail -n 10
-      89959 | gptme.cli.main
-      90792 |           gptme.tools
-     102040 |         gptme.config.cli_setup
-     123656 |       gptme.config
-     127815 |     gptme.llm
-     149715 |     playwright.sync_api._generated
-     156513 |   playwright.sync_api
-     165886 | gptme.tools._browser_playwright
-     169516 |   gptme.commands
-     203389 | gptme.chat
+     105927 | gptme.cli.main
+     113147 |           gptme.tools
+     128990 |         gptme.config.cli_setup
+     155377 |       gptme.config
+     160535 |     gptme.llm
+     194492 |     playwright.sync_api._generated
+     203861 |   playwright.sync_api
+     215938 |   gptme.commands
+     216297 | gptme.tools._browser_playwright
+     258415 | gptme.chat
 
-real	0m1.741s
-user	0m1.100s
-sys	0m0.107s
+real	0m1.548s
+user	0m1.380s
+sys	0m0.158s
 make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 </pre></div>
 </div>
@@ -562,23 +563,21 @@ make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 make[2]: Entering directory &#39;/home/runner/work/gptme/gptme&#39;
 Benchmarking startup time for gptme
 Benchmark 1: import gptme.cli.main
-  Time (mean ± σ):     110.6 ms ±   1.4 ms    [User: 98.7 ms, System: 11.8 ms]
-  Range (min … max):   109.2 ms … 113.5 ms    10 runs
+  Time (mean ± σ):     136.7 ms ±   2.6 ms    [User: 116.6 ms, System: 20.0 ms]
+  Range (min … max):   133.7 ms … 141.3 ms    10 runs
  
 Benchmark 2: gptme --help
-  Time (mean ± σ):     435.2 ms ±   3.4 ms    [User: 396.7 ms, System: 38.3 ms]
-  Range (min … max):   431.1 ms … 439.6 ms    10 runs
+  Time (mean ± σ):     578.2 ms ±  33.0 ms    [User: 513.3 ms, System: 64.6 ms]
+  Range (min … max):   544.2 ms … 641.4 ms    10 runs
  
 Benchmark 3: full start/exit cycle
-  Time (mean ± σ):     826.3 ms ± 184.1 ms    [User: 606.2 ms, System: 257.1 ms]
-  Range (min … max):   700.8 ms … 1266.4 ms    10 runs
- 
-  Warning: Statistical outliers were detected. Consider re-running this benchmark on a quiet system without any interferences from other programs. It might help to use the &#39;--warmup&#39; or &#39;--prepare&#39; options.
+  Time (mean ± σ):     914.7 ms ±   9.8 ms    [User: 737.9 ms, System: 425.1 ms]
+  Range (min … max):   903.4 ms … 935.2 ms    10 runs
  
 Summary
   import gptme.cli.main ran
-    3.93 ± 0.06 times faster than gptme --help
-    7.47 ± 1.67 times faster than full start/exit cycle
+    4.23 ± 0.25 times faster than gptme --help
+    6.69 ± 0.15 times faster than full start/exit cycle
 make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 </pre></div>
 </div>
@@ -2980,7 +2979,7 @@ Clone found (python)
 │ Total:     │ 465            │ 166309      │ 776315       │ 154          │ 1872 (1.13%)     │ 10805 (1.39%)     │
 └────────────┴────────────────┴─────────────┴──────────────┴──────────────┴──────────────────┴───────────────────┘
 Found 154 clones.
-time: 336.114ms
+time: 375.252ms
 make[3]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 </pre></div>
