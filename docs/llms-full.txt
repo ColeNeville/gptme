@@ -203,6 +203,9 @@ To run gptme without an API key, use a local model via `Ollama <https://ollama.c
     ollama pull llama3.2:1b
     ollama serve  # run in background or separate terminal
 
+    # Check that gptme can see the local server (probes /v1/models)
+    gptme providers list
+
     # Use with gptme (OPENAI_BASE_URL is required by the local provider)
     export OPENAI_BASE_URL="http://127.0.0.1:11434/v1"
     gptme "hello" -m local/llama3.2:1b
@@ -5732,6 +5735,29 @@ Tool use fails or loops
   **Cause:** Model too small for tool format
   **Fix:** Use a 7B+ instruction-tuned model; or try a different tool format (``gptme --tool-format xml``)
 
+Auto-discovery
+---------------
+
+``gptme providers list`` probes well-known local OpenAI-compatible endpoints and
+reports what it finds — including candidates that are not running:
+
+- Ollama: ``GET http://127.0.0.1:11434/v1/models``
+- LM Studio: ``GET http://127.0.0.1:1234/v1/models``
+
+Detection is an HTTP GET of the real ``/v1/models`` path (the OpenAI models
+list), not a port-open check and not Ollama's native ``/api/tags``. A process
+listening on the port that is not OpenAI-compatible is listed with a reason
+rather than silently skipped.
+
+Auto-discovery never writes config. Use ``gptme providers add`` (or a
+``[[providers]]`` block) to persist a provider. Disable probes with
+``GPTME_NO_LOCAL_DISCOVERY=1`` or ``gptme providers list --no-discover``.
+
+.. code-block:: sh
+
+    gptme providers list
+    gptme providers list --json
+
 vLLM and OpenAI-compatible servers
 -----------------------------------
 
@@ -9406,6 +9432,9 @@ Anthropic and adopted by 26+ tools (Claude Code, OpenAI Codex, Gemini CLI,
 GitHub Copilot, Cursor, and more). Skills authored for gptme work in those
 tools, and vice versa — the same interop play gptme makes for :doc:`MCP <mcp>`.
 
+Looking for something to install? See the :doc:`skills-gallery` — a curated
+selection of community skills from gptme-contrib.
+
 .. note::
 
    Skills are a **special case of lessons** using the Agent Skills open standard format.
@@ -9553,7 +9582,7 @@ Skills are loaded from the following directories (if they exist):
 
 **User-level:**
 
-1. ``~/.config/gptme/skills/`` - gptme native skills
+1. ``~/.config/gptme/skills/`` - gptme native skills (or ``$XDG_CONFIG_HOME/gptme/skills/`` if ``XDG_CONFIG_HOME`` is set)
 2. ``~/.claude/skills/`` - Claude CLI compatibility (share skills with Claude CLI)
 3. ``~/.agents/skills/`` - Cross-platform standard
 
@@ -9579,7 +9608,38 @@ Use the utility CLI to see what the current workspace already knows about:
 
 ``skills list`` shows skill names and descriptions. ``--all`` includes regular
 lessons in the same discovery pass, and ``skills dirs`` shows exactly which
-directories are being scanned.
+directories are being scanned. For the full list of subcommands, run
+``gptme-util skills --help``.
+
+Install a skill from the default ``gptme-contrib`` registry with
+(use ``gptme-util skills dirs`` to see exactly where it lands):
+
+.. code-block:: bash
+
+    gptme-util skills install home-assistant
+
+See the :doc:`skills-gallery` for a curated list of community skills and the
+same install command.
+
+Invoking Skills as Commands
+---------------------------
+
+Every discovered skill is also registered as a slash command, matching how
+Claude Code and Codex expose skills. Inside a chat (CLI, TUI, or server/WebUI),
+``/skill:<name> [args]`` queues the skill body as your next user prompt (with a
+``Skill invoked:`` header) so the assistant acts on it immediately:
+
+.. code-block:: text
+
+    /skill:end                # canonical form, never collides
+    /end                      # bare alias, only if no command/tool is named "end"
+    /skill:review src/app.py  # arguments are passed through
+
+In the skill body, ``$ARGUMENTS`` expands to the full argument string and
+``$ARGUMENTS[N]`` / ``${N}`` to the N-th (0-based) whitespace-separated
+argument (curly braces are required for positional references to avoid
+ambiguity with literal dollar amounts like ``$100`` in skill prose).
+Use ``/skills read <name>`` to view a skill without invoking it.
 
 Creating Skills
 ---------------
@@ -9760,15 +9820,120 @@ Example:
 - Lesson: ``lessons/patterns/testing.md`` - Testing best practices
 - Skill: ``skills/testing-skill.md`` - Bundled pytest utilities
 
+.. toctree::
+   :maxdepth: 1
+
+   skills-gallery
+
 Related
 -------
 
+- :doc:`skills-gallery` - Curated community skills to install
 - :doc:`lessons` - Core knowledge system
 - :doc:`plugins` - For hooks, custom tools, and deep integration
 - :doc:`hooks` - Lifecycle callbacks (plugins only)
 - `Issue #686 <https://github.com/gptme/gptme/issues/686>`_ - Phase 4: Skills Integration
 - `Issue #1170 <https://github.com/gptme/gptme/issues/1170>`_ - Phase 4.2+ roadmap
 - `Claude Skills <https://simonwillison.net/2025/Oct/10/claude-skills/>`_ - Inspiration
+
+
+Skills Gallery
+==============
+
+A curated selection of community skills from the default
+`gptme-contrib <https://github.com/gptme/gptme-contrib>`_ registry. These are
+hand-picked, battle-tested workflows — several run in production agent ops —
+and each one installs with the same ``gptme-util skills install`` command below.
+
+Installing
+----------
+
+Skills from ``gptme-contrib`` install with ``gptme-util skills install``. That
+copies the skill into the primary skills directory (see ``gptme-util skills dirs``),
+which gptme already scans (see :doc:`skills`). The command is the same for every
+skill on this page — only the skill name changes:
+
+.. code-block:: bash
+
+   gptme-util skills install home-assistant
+
+After install, skills auto-load when their name appears in a message — mention
+"home-assistant" and gptme pulls that skill into context.
+
+If you already have ``gptme-contrib`` cloned, install from the local path directly — the
+same ``install`` command accepts a directory path:
+
+.. code-block:: bash
+
+   gptme-util skills install /absolute/path/to/gptme-contrib/skills/home-assistant
+
+Do not add a relative ``gptme-contrib/skills`` path to ``[lessons] dirs``.
+That option is for lesson trees, and a relative path there is resolved against
+the current working directory, not the clone location.
+
+The curated list
+----------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 18 30 20 32
+
+   * - Skill
+     - What it does
+     - Social proof
+     - Source
+   * - **home-assistant**
+     - Query a Home Assistant instance for presence, sensor data, calendar
+       events, and cameras.
+     - Included in the default contrib registry; used in live agent ops.
+     - ``gptme-contrib/skills/home-assistant``
+   * - **gptme-wrapped**
+     - Analyze your gptme conversation history for insights like token usage,
+       costs, model preferences, and usage patterns.
+     - Community-facing showcase skill.
+     - ``gptme-contrib/skills/gptme-wrapped``
+   * - **code-review-helper**
+     - Systematic, multi-lens code review workflow with bundled utilities for
+       structured, pattern-aware feedback.
+     - Proven in production PR review loops.
+     - ``gptme-contrib/skills/code-review-helper``
+   * - **agentic-presentation**
+     - Generate an offline, single-file HTML presentation from structured
+       slide JSON.
+     - Clean, self-contained output artifact.
+     - ``gptme-contrib/skills/agentic-presentation``
+   * - **artifact-publishing**
+     - Publish any HTML artifact (demo, visualization, interactive content) to
+       a static host such as GitHub Pages.
+     - Used for real publishing in production agent stacks.
+     - ``gptme-contrib/skills/artifact-publishing``
+
+For the complete inventory of skills and lessons, see the
+`gptme-contrib skills directory <https://github.com/gptme/gptme-contrib/tree/master/skills>`_.
+
+Why curated?
+------------
+
+gptme skills are powerful but filesystem-scanned — discoverable only if you
+know where to look. This gallery is the human-facing discovery surface that
+points you at the right skill to reach for. It is intentionally small and
+hand-picked rather than an exhaustive registry, so each entry carries a clear
+pitch and social proof.
+
+Contributing
+------------
+
+Have a skill that should be here? Add it to `gptme-contrib
+<https://github.com/gptme/gptme-contrib>`_ and tag it with the ``gptme-skill``
+topic so it is discoverable; community skills with real star/fork counts can be
+added to this gallery alongside the curated defaults.
+
+Related
+-------
+
+- :doc:`skills` - the full skills system, formats, and loading paths
+- :doc:`lessons` - the knowledge system skills extend
+- `gptme-contrib README <https://github.com/gptme/gptme-contrib>`_ - the registry this gallery curates
 
 
 Contributing
@@ -10587,6 +10752,7 @@ Tool Lifecycle Hooks
 - ``TOOL_EXECUTE_POST``: After executing any tool
 - ``TOOL_TRANSFORM``: Transform tool execution
 - ``TOOL_CONFIRM``: Blocking confirmation/deny decision before execution
+  (see :ref:`confirmation-hooks-and-deny-decisions`)
 
 File Operation Hooks
 ~~~~~~~~~~~~~~~~~~~~~
@@ -10695,16 +10861,83 @@ Hook functions receive different arguments depending on the hook type:
    def session_hook(logdir, workspace, initial_msgs):
        pass
 
-   # Confirmation hooks
+   # Confirmation hooks (see "Confirmation Hooks and Deny Decisions" below)
    def confirm_hook(tool_use, preview=None, workspace=None):
-       return ConfirmationResult.confirm()
+       if is_dangerous(tool_use):
+           return ConfirmationResult.skip("Blocked: destructive path")
+       return None  # fall through to the next confirmation hook
 
-Hook functions can:
+Most hook functions can:
 
 - Return ``None`` (no action)
 - Return a single ``Message`` object
 - Return a generator that yields ``Message`` objects
 - Raise exceptions (which are caught and logged)
+
+``TOOL_CONFIRM`` hooks are the exception: they *return* a
+``ConfirmationResult`` rather than yielding messages. See below.
+
+.. _confirmation-hooks-and-deny-decisions:
+
+Confirmation Hooks and Deny Decisions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``TOOL_CONFIRM`` is the hook for deterministic, below-the-model guardrails: it
+runs before a tool executes and can **deny** execution outright.
+
+.. code-block:: python
+
+   from gptme.hooks import HookType, register_hook
+   from gptme.hooks.confirm import ConfirmationResult
+
+   def block_secret_reads(tool_use, preview=None, workspace=None):
+       """Deny any shell command that reads private keys."""
+       if tool_use.tool == "shell" and "id_rsa" in (tool_use.content or ""):
+           return ConfirmationResult.skip("Blocked: secret file access")
+       return None  # not our decision — fall through
+
+   def register():
+       register_hook(
+           "guardrail.secrets",
+           HookType.TOOL_CONFIRM,
+           block_secret_reads,
+           priority=1000,  # must exceed every built-in confirmation hook
+       )
+
+The three results a confirmation hook can return:
+
+- ``ConfirmationResult.skip(message)`` — **deny**; the tool does not execute, and ``message`` is surfaced as the reason.
+- ``ConfirmationResult.confirm()`` — approve without prompting the user.
+- ``ConfirmationResult.edit(content)`` — execute with modified content.
+
+Returning ``None`` falls through to the next ``TOOL_CONFIRM`` hook in priority
+order; the first non-``None`` result wins. If no hook is registered at all,
+execution is auto-confirmed (autonomous mode).
+
+.. warning::
+
+   A guardrail must out-rank **every** built-in confirmation hook, or it can be
+   pre-empted before it ever runs. The built-ins register at:
+
+   - ``server_confirm`` — priority **100**
+   - ``cli_confirm`` — priority **0**
+   - ``auto_confirm`` — priority **0**
+
+   Hooks sort by ``(priority, name)`` **descending**, so equal priority is broken
+   by name in *reverse* alphabetical order — not by registration order. A
+   guardrail named ``guardrail.secrets`` registered at priority ``100`` therefore
+   loses to ``server_confirm`` (``"s" > "g"``), which returns a non-``None``
+   result and prevents the guardrail from running at all. Pick a priority
+   strictly greater than 100 (the example uses ``1000``) rather than relying on
+   the name tie-break.
+
+.. note::
+
+   ``--no-confirm``/``-y`` only stops gptme from registering its *interactive*
+   confirmation hooks (``cli_confirm``/``server_confirm``). A plugin-registered
+   ``TOOL_CONFIRM`` hook is still called, so a ``skip`` result keeps blocking
+   execution in autonomous runs. This is what makes the hook usable as a real
+   guardrail rather than a prompt.
 
 Managing Hooks
 --------------
@@ -14594,6 +14827,7 @@ Changes since v0.32.1:
 
 **Full Changelog**: https://github.com/gptme/gptme/compare/v0.32.1...v0.33.0
 
+
 # v0.32.1
 
 These are the release notes for gptme version v0.32.1.
@@ -14704,6 +14938,7 @@ Changes since v0.32.0:
 *(excluded 4 less relevant [commits](https://github.com/gptme/gptme/compare/v0.32.0...v0.32.1))*
 
 **Full Changelog**: https://github.com/gptme/gptme/compare/v0.32.0...v0.32.1
+
 
 # v0.32.0
 
